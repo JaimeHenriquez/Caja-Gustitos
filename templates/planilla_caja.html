@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+  <div class="card shadow-lg bg-dark text-white border-danger">
+    <!-- Header -->
+    <div class="card-header bg-danger text-white text-center fs-3 fw-bold">
+      <i class="fa-solid fa-cash-register me-2"></i> Planilla de Caja
+    </div>
+
+    <!-- Tabla -->
+    <div class="table-responsive">
+      <table class="table table-dark table-hover align-middle mb-0">
+        <thead class="table-danger text-white">
+          <tr>
+            <th>Fecha</th>
+            <th>Código Autorización</th>
+            <th>N° Interno</th>
+            <th>Medio de Pago</th>
+            <th>Monto</th>
+            <th>Propina</th>
+            <th>Total</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for v in ventas %}
+          <tr>
+            <td>{{ v[0] }}</td>
+            <td>{{ v[1] if v[1] else "-" }}</td>
+            <td>{{ v[2] }}</td>
+            <td class="text-capitalize">{{ v[3] }}</td>
+            <td>${{ "{:,.0f}".format(v[4] or 0) }}</td>
+            <td>${{ "{:,.0f}".format(v[5] or 0) }}</td>
+            <td class="fw-bold text-success">${{ "{:,.0f}".format(v[6] or 0) }}</td>
+            <td>
+              <!-- Botón que abre el modal -->
+              <button class="btn btn-danger btn-sm w-100" onclick="abrirModal({{ loop.index + 1 }})">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+
+          {% if ventas %}
+          <tr>
+            <td colspan="7" class="text-end fw-bold">
+              Total de ventas registradas:
+            </td>
+            <td class="fw-bold">
+              {{ ventas|length }}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="8" class="text-center text-muted">
+              No hay ventas registradas.
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <div class="card-footer text-center">
+      <a href="{{ url_for('index') }}" class="btn btn-danger btn-lg">
+        <i class="fa-solid fa-house me-1"></i> Volver al Inicio
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de eliminación -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white border-danger">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa-solid fa-trash me-2"></i> Confirmar Eliminación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="formEliminar" method="post">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Clave de Autorización</label>
+            <input type="password" name="clave_eliminar" class="form-control bg-dark text-white border-secondary" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Motivo de eliminación</label>
+            <textarea name="motivo_eliminar" rows="3" class="form-control bg-dark text-white border-secondary" placeholder="Ej: venta duplicada o error de monto" required></textarea>
+          </div>
+          <small class="text-muted"><i class="fa-solid fa-circle-info me-1"></i> La venta se guardará en “Ventas Borradas”.</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger"><i class="fa-solid fa-check me-1"></i> Confirmar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+let ventaSeleccionada = null;
+
+function abrirModal(indice) {
+  ventaSeleccionada = indice;
+  const modal = new bootstrap.Modal(document.getElementById('eliminarModal'));
+  document.getElementById('formEliminar').action = `/eliminar_venta/${indice}`;
+  modal.show();
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+
+    {% if not session.get('cajero') %}
+    <!-- FORMULARIO INICIAL -->
+    <div class="card p-4 shadow-lg">
+      <h2 class="page-title mb-3"><i class="fa-solid fa-user-tie me-2"></i> Iniciar Turno</h2>
+
+      <form method="POST" action="{{ url_for('iniciar_turno') }}" class="row g-3">
+        <!-- Nombre Cajero -->
+        <div class="col-md-6">
+          <label class="form-label">Nombre del Cajero</label>
+          <input type="text" class="form-control" name="cajero" required>
+        </div>
+
+        <!-- Turno -->
+        <div class="col-md-6">
+          <label class="form-label">Turno</label>
+          <select class="form-select" name="turno" required>
+            <option value="">Seleccione...</option>
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+            <option value="AM/PM">AM / PM</option>
+          </select>
+        </div>
+
+        <!-- Caja Inicial -->
+        <div class="col-12">
+          <label class="form-label">Caja Inicial</label>
+          <input type="number" class="form-control" name="caja_inicial" required>
+        </div>
+
+        <!-- Botón -->
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn btn-red w-100 py-2">
+            <i class="fa-solid fa-check me-1"></i> Guardar e Ingresar
+          </button>
+        </div>
+      </form>
+    </div>
+
+    {% else %}
+    <!-- PANEL PRINCIPAL -->
+    <div class="card p-5 shadow-lg text-center">
+      <h2 class="page-title mb-4"><i class="fa-solid fa-cash-register me-2"></i> Panel Principal</h2>
+      <p class="text-white mb-4">
+        Cajero: <strong>{{ session['cajero'] }}</strong> | 
+        Turno: <strong>{{ session['turno'] }}</strong> | 
+        Caja Inicial: <strong>${{ "{:,.0f}".format(session['caja_inicial']) }}</strong>
+      </p>
+
+      <div class="row g-3">
+        <!-- Venta -->
+        <div class="col-md-4">
+          <a href="{{ url_for('agregar_venta') }}" class="btn btn-red w-100 py-4 d-flex align-items-center justify-content-center flex-column">
+            <i class="fa-solid fa-pizza-slice fa-2x mb-2"></i>
+            <span>Agregar Venta</span>
+          </a>
+        </div>
+
+        <!-- Reparto -->
+        <div class="col-md-4">
+          <a href="{{ url_for('agregar_reparto') }}" class="btn btn-red w-100 py-4 d-flex align-items-center justify-content-center flex-column">
+            <i class="fa-solid fa-motorcycle fa-2x mb-2"></i>
+            <span>Agregar Reparto</span>
+          </a>
+        </div>
+
+        <!-- Egreso -->
+        <div class="col-md-4">
+          <a href="{{ url_for('agregar_egreso') }}" class="btn btn-red w-100 py-4 d-flex align-items-center justify-content-center flex-column">
+            <i class="fa-solid fa-money-bill-wave fa-2x mb-2"></i>
+            <span>Agregar Egreso</span>
+          </a>
+        </div>
+
+        <!-- Merma -->
+        <div class="col-md-4">
+          <a href="{{ url_for('agregar_merma') }}" class="btn btn-red w-100 py-4 d-flex align-items-center justify-content-center flex-column">
+            <i class="fa-solid fa-pizza-slice fa-2x mb-2"></i>
+            <span>Agregar Merma</span>
+          </a>
+        </div>
+
+        <!-- Desglose -->
+        <div class="col-md-4">
+          <a href="{{ url_for('agregar_desglose') }}" class="btn btn-red w-100 py-4 d-flex align-items-center justify-content-center flex-column">
+            <i class="fa-solid fa-money-check-dollar fa-2x mb-2"></i>
+            <span>Agregar Desglose</span>
+          </a>
+        </div>
+
+        <!-- Cortesía -->
+        <div class="col-md-4">
+          <a href="{{ url_for('agregar_cortesia') }}" class="btn btn-red w-100 py-4 d-flex align-items-center justify-content-center flex-column">
+            <i class="fa-solid fa-gift fa-2x mb-2"></i>
+            <span>Agregar Cortesía</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+  <!-- Mensajes flash -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="mb-3">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show shadow-lg border-2" role="alert">
+            <i class="fa-solid {{ 'fa-circle-exclamation' if category == 'error' else 'fa-circle-check' }} me-2"></i>
+            {{ message }}
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="card bg-dark text-white shadow-lg border-warning">
+    <div class="card-header bg-warning text-dark text-center fs-3 fw-bold">
+      <i class="fa-solid fa-pen-to-square me-2"></i> Editar Egreso
+    </div>
+    <div class="card-body">
+      <form action="{{ url_for('editar_egreso', indice=indice) }}" method="post">
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Fecha (solo lectura)</label>
+          <input type="text" class="form-control" value="{{ egreso.fecha }}" disabled>
+          <div class="form-text text-muted">La fecha se mantiene igual que el registro original.</div>
+        </div>
+
+        <div class="mb-3">
+          <label for="motivo" class="form-label fw-bold">Motivo</label>
+          <input type="text" class="form-control" id="motivo" name="motivo" value="{{ egreso.motivo }}" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="valor" class="form-label fw-bold">Valor</label>
+          <input type="number" class="form-control" id="valor" name="valor"
+                 value="{{ egreso.valor }}" min="0" step="100" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="boleta" class="form-label fw-bold">Nº Boleta / Factura</label>
+          <input type="text" class="form-control" id="boleta" name="boleta" value="{{ egreso.boleta }}">
+        </div>
+
+        <div class="d-flex justify-content-between mt-4">
+          <a href="{{ url_for('planilla_egresos') }}" class="btn btn-secondary btn-lg">
+            <i class="fa-solid fa-arrow-left-long me-1"></i> Volver
+          </a>
+          <button type="submit" class="btn btn-warning btn-lg">
+            <i class="fa-solid fa-floppy-disk me-1"></i> Guardar Cambios
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

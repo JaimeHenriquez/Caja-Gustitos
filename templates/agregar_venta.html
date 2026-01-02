@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card p-4 shadow-lg">
+      <h2 class="page-title mb-3"><i class="fa-solid fa-pizza-slice me-2"></i>Registrar Venta</h2>
+
+      <form method="POST" class="row g-3">
+        <!-- Nº Interno y Código de Autorización -->
+        <div class="col-md-6">
+          <label class="form-label">Número Interno</label>
+          <input type="text" class="form-control" name="numero_interno" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Código Autorización Tarjeta</label>
+          <input type="text" class="form-control" name="codigo_autorizacion" placeholder="Solo débito/crédito">
+        </div>
+
+        <!-- Métodos de pago dinámicos -->
+        <div class="col-12">
+          <label class="form-label mb-1">Métodos de Pago</label>
+
+          <div id="pagos">
+            <!-- Fila inicial -->
+            <div class="row g-2 pago align-items-end mb-2">
+              <div class="col-md-4">
+                <label class="form-label">Método</label>
+                <select name="medio_pago[]" class="form-select" required>
+                  {% for m in medios %}
+                    <option value="{{ m }}">{{ m|capitalize }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Monto</label>
+                <input type="number" name="monto_pago[]" class="form-control" required>
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Propina</label>
+                <input type="number" name="propina_pago[]" class="form-control" placeholder="Opcional">
+              </div>
+            </div>
+          </div>
+
+          <!-- Botón: agregar otro método -->
+          <button type="button" id="btn-add-pago" class="btn btn-ghost mt-2">
+            <i class="fa-solid fa-plus me-1"></i> Agregar método de pago
+          </button>
+        </div>
+
+        <!-- Botón principal -->
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn btn-red w-100 py-2">
+            <i class="fa-solid fa-check me-1"></i> Registrar Venta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Template oculto para clonar -->
+<template id="pago-template">
+  <div class="row g-2 pago align-items-end mb-2">
+    <div class="col-md-4">
+      <label class="form-label">Método</label>
+      <select name="medio_pago[]" class="form-select" required>
+        {% for m in medios %}
+          <option value="{{ m }}">{{ m|capitalize }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Monto</label>
+      <input type="number" name="monto_pago[]" class="form-control" required>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Propina</label>
+      <input type="number" name="propina_pago[]" class="form-control" placeholder="Opcional">
+    </div>
+  </div>
+</template>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnAdd = document.getElementById('btn-add-pago');
+    const cont = document.getElementById('pagos');
+    const tpl = document.getElementById('pago-template');
+
+    btnAdd.addEventListener('click', () => {
+      const clone = tpl.content.cloneNode(true);
+      cont.appendChild(clone);
+    });
+  });
+</script>
+
+{% endblock %}

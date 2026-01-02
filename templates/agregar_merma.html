@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">⚠️ Registrar Merma</h2>
+    <form method="POST" action="{{ url_for('agregar_merma') }}">
+        <div class="mb-3">
+            <label for="motivo" class="form-label">Motivo</label>
+            <input type="text" class="form-control" id="motivo" name="motivo" required>
+        </div>
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="number" class="form-control" id="valor" name="valor" required>
+        </div>
+        <button type="submit" class="btn btn-warning">💾 Guardar Merma</button>
+    </form>
+</div>
+{% endblock %}

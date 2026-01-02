@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">➖ Registrar Egreso</h2>
+    <form method="POST" action="{{ url_for('agregar_egreso') }}">
+        <div class="mb-3">
+            <label for="motivo" class="form-label">Motivo</label>
+            <input type="text" class="form-control" id="motivo" name="motivo" required>
+        </div>
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="number" class="form-control" id="valor" name="valor" required>
+        </div>
+        <div class="mb-3">
+            <label for="boleta" class="form-label">Nº Boleta/Factura (opcional)</label>
+            <input type="text" class="form-control" id="boleta" name="boleta">
+        </div>
+        <button type="submit" class="btn btn-danger">💾 Guardar Egreso</button>
+    </form>
+</div>
+{% endblock %}

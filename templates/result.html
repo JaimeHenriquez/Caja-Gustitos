@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-center mt-5">
+    <div class="card shadow-lg p-5 text-center bg-dark" 
+         style="max-width: 700px; border: 2px solid #c62828; border-radius: 15px;">
+
+        <!-- Título -->
+        <h2 class="mb-4 text-white" style="font-size: 2rem;">
+            <i class="fa-solid fa-circle-check text-danger me-2"></i> Resultado
+        </h2>
+
+        <!-- Mensaje -->
+        <p class="fs-3 text-white mb-5">
+            {{ mensaje|safe }}
+        </p>
+
+        <!-- Botones -->
+        <div class="d-flex justify-content-center gap-4">
+            {% if volver %}
+            <a href="{{ url_for(volver) }}" class="btn btn-lg btn-danger px-4 py-2">
+                <i class="fa-solid fa-rotate-left me-2"></i> Volver a Ingresar
+            </a>
+            {% endif %}
+
+            <a href="{{ url_for('index') }}" class="btn btn-lg btn-danger px-4 py-2">
+                <i class="fa-solid fa-house me-2"></i> Volver al Inicio
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

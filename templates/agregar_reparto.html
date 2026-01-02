@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card p-4 shadow-lg">
+      <h2 class="page-title mb-3"><i class="fa-solid fa-motorcycle me-2"></i>Registrar Reparto</h2>
+
+      <form method="POST" class="row g-3">
+        <!-- Nombre del Repartidor -->
+        <div class="col-md-6">
+          <label class="form-label">Nombre del Repartidor</label>
+          <input type="text" class="form-control" name="repartidor" required>
+        </div>
+
+        <!-- Dirección del Reparto -->
+        <div class="col-md-6">
+          <label class="form-label">Dirección del Reparto</label>
+          <input type="text" class="form-control" name="direccion" required placeholder="Ej: Av. Alemania 1234">
+        </div>
+
+        <!-- Monto del Reparto -->
+        <div class="col-md-6">
+          <label class="form-label">Monto del Reparto</label>
+          <input type="number" class="form-control" name="monto" required>
+        </div>
+
+        <!-- Piso -->
+        <div class="col-md-6">
+          <label class="form-label">Piso (si corresponde)</label>
+          <input type="number" class="form-control" name="piso" placeholder="Opcional">
+        </div>
+
+        <!-- Botón -->
+        <div class="col-12 mt-3">
+          <button type="submit" class="btn btn-red w-100 py-2">
+            <i class="fa-solid fa-check me-1"></i> Registrar Reparto
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

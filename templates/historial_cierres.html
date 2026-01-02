@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+
+    <!-- Card principal -->
+    <div class="card p-4 shadow-lg">
+      <h2 class="page-title mb-4 text-center">
+        <i class="fa-solid fa-folder-open me-2"></i> Historial de Cierres
+      </h2>
+
+      {% if archivos %}
+        <ul class="list-group">
+          {% for archivo in archivos %}
+          <li class="list-group-item d-flex justify-content-between align-items-center bg-dark text-white mb-2 rounded shadow-sm">
+            <div>
+              <i class="fa-solid fa-file-excel text-success me-2"></i>
+              {{ archivo }}
+            </div>
+            <a href="{{ url_for('descargar_cierre', nombre=archivo) }}" class="btn btn-danger btn-sm">
+              <i class="fa-solid fa-download me-1"></i> Descargar
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p class="text-center text-muted">⚠️ No hay cierres guardados todavía.</p>
+      {% endif %}
+    </div>
+
+    <!-- Botón volver -->
+    <div class="text-center mt-3">
+      <a href="{{ url_for('index') }}" class="btn btn-secondary">
+        <i class="fa-solid fa-arrow-left me-1"></i> Volver al Inicio
+      </a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

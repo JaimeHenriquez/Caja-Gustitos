@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card p-5 shadow-lg text-center bg-dark text-white">
+      <h2 class="mb-4 text-danger"><i class="fa-solid fa-lock me-2"></i> Caja Cerrada</h2>
+      <p class="fs-5 mb-4">La caja ha sido cerrada correctamente.</p>
+
+      <div class="d-flex justify-content-center gap-3">
+    <a href="{{ url_for('descargar_cierre_final') }}" class="btn btn-danger px-4 py-2">
+        <i class="fa-solid fa-download me-1"></i> Descargar Excel
+    </a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary px-4 py-2">
+          <i class="fa-solid fa-rotate-left me-1"></i> Iniciar Nuevo Turno
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
